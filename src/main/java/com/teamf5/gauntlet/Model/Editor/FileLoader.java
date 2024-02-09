@@ -23,6 +23,9 @@ public class FileLoader {
      */
     public GameMap loadBinary() {
         try {
+            // Not the fastest way to read the file: it would be more efficient to read it all at one with file.readAllBytes
+            // and parse the data contained in the byte array.
+
             FileInputStream file = new FileInputStream(this.FILENAME);
 
             // Read the identification string
