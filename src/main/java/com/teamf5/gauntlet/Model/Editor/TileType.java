@@ -1,5 +1,8 @@
 package com.teamf5.gauntlet.Model.Editor;
 
+/**
+ * Defines the different types of tiles.
+ */
 public enum TileType {
     // Potions
     GREEN_POTION_GOOD,
