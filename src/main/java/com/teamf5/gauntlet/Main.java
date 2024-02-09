@@ -25,9 +25,7 @@ public class Main extends Application {
         stage.show ();
     }
 
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
-
+    public static void testGameMap() {
         GameMap map = new GameMap(8, 8);
         map.setTile(1, 0, TileType.CHICKEN);
         System.out.println("Original map:");
