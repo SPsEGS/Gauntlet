@@ -1,0 +1,18 @@
+.button {
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+    -fx-border-width: 1px;
+    -fx-padding: 5 12 5 12 em;
+}
+
+.tab {
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+    -fx-border-width: 2px;
+}
+
+.tabContent {
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+    -fx-border-width: 2px;
+}

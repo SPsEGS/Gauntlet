@@ -1,0 +1,38 @@
+@import url("basicThemeNoColors.css");
+
+.background {
+    -fx-background-color: #3E3E48;
+}
+
+
+.tab-pane {
+    -fx-background-color: transparent;
+}
+
+.tab {
+    -fx-background-color: #272735;
+    -fx-text-base-color: white;
+    -fx-border-color: black;
+}
+
+.tabContent {
+    -fx-background-color: white;
+    -fx-text-base-color: white;
+    -fx-border-color: black;
+}
+
+
+.button {
+    -fx-background-color: #272735;
+    -fx-text-fill: white;
+    -fx-border-color: black;
+}
+
+.button:hover {
+    /* -fx-background-color: #323246; */
+    -fx-background-color: #1A1A1A;
+    -fx-text-fill: white;
+}
+.button:pressed {
+    -fx-background-color: #4b4b4b;
+}
