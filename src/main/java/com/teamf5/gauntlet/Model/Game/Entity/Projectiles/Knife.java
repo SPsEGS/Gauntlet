@@ -1,4 +1,6 @@
 package com.teamf5.gauntlet.Model.Game.Entity.Projectiles;
 
-public class Knife {
+import com.teamf5.gauntlet.Model.Game.Entity.Projectile;
+
+public class Knife extends Projectile {
 }
