@@ -6,7 +6,7 @@ Les conventions utilisées sont celles définies par Oracle dans [ce document](h
 
 - Une instruction par ligne.
 - Déclarer une variable par ligne.
-- Les classes sont nommées en `PascalCase`.
+- Les classes et packages sont nommées en `PascalCase`.
 - Les variables et méthodes sont nommées en `camelCase`.
 - Les constantes sont nommées en `SNAKE_CASE`.
 - On initialise les propriétés d'une classe dans l'ordre suivant :
