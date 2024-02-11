@@ -11,6 +11,9 @@
 <?import java.lang.Double?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.Image?>
 <fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="$windowWidth" minHeight="$windowHeight">
 
@@ -28,7 +31,7 @@
         <Double fx:id="tabHeight" fx:value="125"/>
     </fx:define>
 
-    <StackPane>
+    <StackPane styleClass="background">
         <ScrollPane>
             <AnchorPane>
                 <GridPane>
@@ -45,12 +48,17 @@
             <Button AnchorPane.topAnchor="$offset" AnchorPane.rightAnchor="$offset">Theme</Button>
 
             <TabPane AnchorPane.bottomAnchor="$offset" AnchorPane.leftAnchor="$offset"
-                     AnchorPane.rightAnchor="$offset" minHeight="$tabHeight">
+                     AnchorPane.rightAnchor="$offset" minHeight="$tabHeight"
+                     styleClass="background">
                 <Tab text="Monsters" closable="false">
-                    <Label>HERE BE DRAGONS</Label>
+                    <Label text="Careful! Here be dragons!"/>
                 </Tab>
                 <Tab text="Items" closable="false">
-                    <Label>It's dangerous to go alone. Here, take this.</Label>
+                    <HBox styleClass="horizontal-tab-content">
+                        <ImageView>
+                            <Image url="@../Textures/Tiles/Potions/potion_magic.png" backgroundLoading="true"/>
+                        </ImageView>
+                    </HBox>
                 </Tab>
                 <Tab text="Walls" closable="false">
                     <Label>We need to build a wall.</Label>
