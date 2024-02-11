@@ -39,8 +39,8 @@ public class CoolClass {
     private static int privateStaticMember;
 
     public int publicMember;
-    public int privateMember;
-    public final int PRIVATE_CONSTANT;
+    private int privateMember;
+    private final int PRIVATE_CONSTANT;
 
     public CoolClass(int coolParameter, String coolName) {
         // ...
