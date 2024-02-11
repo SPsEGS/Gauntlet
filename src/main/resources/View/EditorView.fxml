@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Button?>
+
+<?import java.lang.Double?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1"
+         minWidth="$windowWidth" minHeight="$windowHeight">
+
+    <fx:define>
+        <Double fx:id="windowWidth" fx:value="1280"/>
+    </fx:define>
+    <fx:define>
+        <Double fx:id="windowHeight" fx:value="720"/>
+    </fx:define>
+
+    <fx:define>
+        <Double fx:id="offset" fx:value="25.0"/>
+    </fx:define>
+    <fx:define>
+        <Double fx:id="tabHeight" fx:value="125"/>
+    </fx:define>
+
+    <StackPane>
+        <ScrollPane>
+            <AnchorPane>
+                <GridPane>
+                    <Label text="0, 0"/>
+                    <Label text="0, 1" GridPane.rowIndex="1"/>
+                    <Label text="1, 0" GridPane.columnIndex="1"/>
+                    <Label text="1, 1" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                </GridPane>
+            </AnchorPane>
+        </ScrollPane>
+
+        <AnchorPane minWidth="$windowWidth" minHeight="$windowHeight">
+            <Button AnchorPane.topAnchor="$offset" AnchorPane.leftAnchor="$offset">Menu</Button>
+            <Button AnchorPane.topAnchor="$offset" AnchorPane.rightAnchor="$offset">Theme</Button>
+
+            <TabPane AnchorPane.bottomAnchor="$offset" AnchorPane.leftAnchor="$offset"
+                     AnchorPane.rightAnchor="$offset" minHeight="$tabHeight">
+                <Tab text="Monsters" closable="false">
+                    <Label>HERE BE DRAGONS</Label>
+                </Tab>
+                <Tab text="Items" closable="false">
+                    <Label>It's dangerous to go alone. Here, take this.</Label>
+                </Tab>
+                <Tab text="Walls" closable="false">
+                    <Label>We need to build a wall.</Label>
+                </Tab>
+            </TabPane>
+        </AnchorPane>
+
+    </StackPane>
+</fx:root>
