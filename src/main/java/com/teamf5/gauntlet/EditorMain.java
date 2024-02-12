@@ -11,8 +11,8 @@ import javafx.stage.Stage;
  */
 public class EditorMain extends Application {
     public void start(Stage stage) {
-        int sceneWidth = 1600;
-        int sceneHeight = 1200;
+        int sceneWidth = 1400;
+        int sceneHeight = 1000;
 
         Editor editor = new Editor();
         Scene scene = new Scene(editor, sceneWidth, sceneHeight);
