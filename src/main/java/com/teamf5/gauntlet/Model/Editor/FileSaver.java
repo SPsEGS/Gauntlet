@@ -17,7 +17,7 @@ public class FileSaver {
      */
     public FileSaver(GameMap map, String name) {
         this.MAP = map;
-        this.FILENAME = name + FileProperties.getFileExtension();
+        this.FILENAME = name + FileProperties.getFileExtensionBinary();
     }
 
     /**
@@ -25,28 +25,53 @@ public class FileSaver {
      */
     public void saveBinary() {
         try {
-            FileOutputStream file = new FileOutputStream(this.FILENAME);
+            // We store all the information related to the map in a byte array, then we write it only once to the file.
+            // This is faster than writing in the file byte by byte.
+
+            int fileSize = 0;
+            fileSize += FileProperties.getIdentificationBytes().length + 1;
+            fileSize++; // Begin file tag
+            fileSize++; // Begin header tag
+            fileSize += 2; // Dimensions of the map
+            fileSize++; // End header tag
+            fileSize += this.MAP.getWidth() * this.MAP.getHeight(); // Map data
+            fileSize++; // End file tag
+
+            byte[] byteArray = new byte[fileSize];
+            int currentIndex = 0;
 
             // Write the identification string
-            file.write(FileProperties.getIdentificationBytes());
+            byte[] idBytes = FileProperties.getIdentificationBytes();
+            for (int i = currentIndex; i < currentIndex + idBytes.length; i++)
+                byteArray[i] = idBytes[i];
+            currentIndex += idBytes.length;
 
-            file.write(FileProperties.BEGIN_FILE_TAG);
+            byteArray[currentIndex] = FileProperties.BEGIN_FILE_TAG;
+            currentIndex++;
 
             // Write the header
-            file.write(FileProperties.BEGIN_HEADER_TAG);
+            byteArray[currentIndex] = FileProperties.BEGIN_HEADER_TAG;
+            currentIndex++;
             // Write the map dimensions
-            file.write(this.MAP.getWidth());
-            file.write(this.MAP.getHeight());
-            file.write(FileProperties.END_HEADER_TAG);
+            byteArray[currentIndex] = (byte)this.MAP.getWidth();
+            currentIndex++;
+            byteArray[currentIndex] = (byte)this.MAP.getHeight();
+            currentIndex++;
+            byteArray[currentIndex] = FileProperties.END_HEADER_TAG;
+            currentIndex++;
 
             // Write the actual map
             for (int x = 0; x < this.MAP.getWidth(); x++) {
                 for (int y = 0; y < this.MAP.getHeight(); y++) {
-                    file.write(this.MAP.getTileAsInt(x, y));
+                    byteArray[currentIndex] = (byte)this.MAP.getTileAsInt(x, y);
+                    currentIndex++;
                 }
             }
 
-            file.write(FileProperties.END_FILE_TAG);
+            byteArray[currentIndex] = FileProperties.END_FILE_TAG;
+
+            FileOutputStream file = new FileOutputStream(this.FILENAME);
+            file.write(byteArray);
         } catch (IOException e) {
             System.out.println("Failed to save to " + this.FILENAME + "! " + e.getMessage());
         }
