@@ -5,12 +5,12 @@ package com.teamf5.gauntlet.Model.Editor;
  */
 public enum TileType {
     // Potions
-    GREEN_POTION_GOOD,
-    GREEN_POTION_BAD,
-    PURPLE_POTION,
-    BLUE_POTION,
-    RED_POTION,
-    WHITE_POTION,
+    POTION_LIFE,
+    POTION_POISON,
+    POTION_SPEED,
+    POTION_MAGIC,
+    POTION_PHYSICAL,
+    POTION_DEFENSE,
 
     // Items
     KEY,
