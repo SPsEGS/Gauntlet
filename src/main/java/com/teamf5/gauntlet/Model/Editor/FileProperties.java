@@ -28,7 +28,10 @@ public class FileProperties {
         return "Gauntlet2Map-v0.0.1".getBytes();
     }
 
-    public static String getFileExtension() {
+    /**
+     * @return The file extension of a binary game map file format
+     */
+    public static String getFileExtensionBinary() {
         return ".gmap";
     }
 }

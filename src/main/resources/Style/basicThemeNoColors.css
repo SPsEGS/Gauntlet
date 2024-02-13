@@ -5,10 +5,18 @@
     -fx-padding: 5 12 5 12 em;
 }
 
+
+/* BEGIN: TabPane style */
+
 .tab {
     -fx-background-radius: 7px;
     -fx-border-radius: 7px;
     -fx-border-width: 2px;
+}
+
+/* Selector found in : https://forums.oracle.com/ords/apexds/post/styling-tabpane-css-1983 */
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-width: 0;
 }
 
 .tabContent {
@@ -16,3 +24,9 @@
     -fx-border-radius: 7px;
     -fx-border-width: 2px;
 }
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+/* END: TabPane style */

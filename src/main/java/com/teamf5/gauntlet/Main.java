@@ -19,6 +19,8 @@ import javafx.scene.layout.VBox;
 
 public class Main extends Application {
     public void start(Stage stage) {
+        this.testGameMap();
+
         final VBox myPane = new VBox(5);
 
         // Scene dimensions
@@ -62,6 +64,7 @@ public class Main extends Application {
     public static void testGameMap() {
         GameMap map = new GameMap(8, 8);
         map.setTile(1, 0, TileType.CHICKEN);
+        map.setTile(6, 4, TileType.BOMB);
         System.out.println("Original map:");
         System.out.println(map);
 
@@ -74,5 +77,4 @@ public class Main extends Application {
         System.out.println("Loaded map:");
         System.out.println(loadedMap);
     }
-
 }
