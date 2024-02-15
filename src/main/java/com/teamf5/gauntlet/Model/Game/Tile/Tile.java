@@ -1,4 +1,4 @@
 package com.teamf5.gauntlet.Model.Game.Tile;
 
-public class Tile {
+public abstract class Tile {
 }

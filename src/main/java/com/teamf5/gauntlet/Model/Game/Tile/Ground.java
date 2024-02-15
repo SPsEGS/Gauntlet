@@ -1,4 +1,4 @@
 package com.teamf5.gauntlet.Model.Game.Tile;
 
-public abstract class DecorTile extends Tile {
+public class Ground extends DecorTile {
 }
