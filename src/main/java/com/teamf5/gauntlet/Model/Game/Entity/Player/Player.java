@@ -44,6 +44,22 @@ public abstract class Player extends Character {
         this.physicDamage = physic;
     }
 
+    public void addBuffDefense (int buff) {
+        this.buffs.addDefenseBuff(buff);
+    }
+
+    public void addBuffMagic (int buff) {
+        this.buffs.addMagicDamageBuff(buff);
+    }
+
+    public void addBuffPhysic (int buff) {
+        this.buffs.addPhysicDamageBuff(buff);
+    }
+
+    public void addBuffSpeed (int buff) {
+        this.buffs.addSpeedBuff(buff);
+    }
+
     @Override
     public void takeDamage (int dmg) {
         int realDmg = dmg - this.getDefense();
