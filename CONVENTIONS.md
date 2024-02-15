@@ -31,7 +31,7 @@ Au niveau des conventions spécifiques au projet :
 
 ### Exemple de classe
 
-Le documentation a été """""oubliée""""" (oups).
+La documentation a été """""oubliée""""" (oups).
 
 ```java
 public class CoolClass {
