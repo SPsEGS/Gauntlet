@@ -23,5 +23,6 @@ public enum TileType {
     TREASURE_CHEST,
     DOOR,
     BONES_SPAWNER,
-    BOX_SPAWNER
+    BOX_SPAWNER,
+    EXIT
 }
