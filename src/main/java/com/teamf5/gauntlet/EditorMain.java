@@ -16,6 +16,8 @@ public class EditorMain extends Application {
 
         Editor editor = new Editor();
         Scene scene = new Scene(editor, sceneWidth, sceneHeight);
+
+        // FIXME: find the javafx way for styles
         scene.getStylesheets().add(getClass().getResource("/Style/darkTheme.css").toExternalForm());
 
         stage.setScene(scene);
