@@ -14,6 +14,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.Image?>
+
 <fx:root type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="$windowWidth" minHeight="$windowHeight">
 
