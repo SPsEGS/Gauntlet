@@ -16,11 +16,11 @@ public enum TileType {
     KEY,
     CHICKEN,
     BOMB,
+    TREASURE_CHEST,
 
-    // Other tiles
+    // Other tiles,
     GROUND,
     WALL,
-    TREASURE_CHEST,
     DOOR,
     BONES_SPAWNER,
     BOX_SPAWNER,
