@@ -17,6 +17,4 @@ public class Menu extends Pane {
             throw new RuntimeException("Menu: Failed to load " + fxmlFileName);
         }
     }
-
-
 }
