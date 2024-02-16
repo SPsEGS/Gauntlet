@@ -1,7 +1,7 @@
 @import url("basicThemeNoColors.css");
 
 /* TODO */
-.scroll-pane {
+.background {
     -fx-background-color: #3E3E48;
 }
 
@@ -24,6 +24,9 @@
 
 /* END: Button style */
 
+.mainTitle {
+    -fx-text-fill: WHITE;
+}
 
 /* BEGIN: TabPane style */
 

@@ -5,6 +5,10 @@
     -fx-padding: 5 12 5 12 em;
 }
 
+.mainTitle {
+    -fx-font-size: 100px;
+}
+
 
 /* BEGIN: TabPane style */
 
