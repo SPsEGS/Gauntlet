@@ -1,5 +1,6 @@
 package com.teamf5.gauntlet.Model.Editor;
 
+// FIXME: Each cell of the map is supposed to contain two tiles: a background (floor) and a foreground, to support different ground types.
 /**
  * Represents a game map as an array of tiles.
  */
@@ -26,6 +27,7 @@ public class GameMap {
         }
     }
 
+    // FIXME: "a certain tile type" seems to be a copy-paste mistake since this constructor doesn't let the user chose the tile type.
     /**
      * Constructs a new GameMap filled with a certain tile type.
      * @param width The width of the map.
