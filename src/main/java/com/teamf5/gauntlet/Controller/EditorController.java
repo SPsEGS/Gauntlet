@@ -1,11 +1,14 @@
 package com.teamf5.gauntlet.Controller;
 
+import com.teamf5.gauntlet.Model.Editor.GameMap;
+import com.teamf5.gauntlet.View.TexturesHelper;
+import com.teamf5.gauntlet.View.TileDisplay;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -18,6 +21,10 @@ import java.util.*;
  * The controller for the main view of the Editor.
  */
 public class EditorController {
+    /** The scroll pane used to navigate the map's. Contains the map's grid pane. */
+    @FXML
+    public ScrollPane scroll;
+
     /** The grid on which the game map is shown */
     @FXML
     private GridPane grid;
@@ -38,6 +45,20 @@ public class EditorController {
      * Creates and adds all dynamically created UI elements to the editor (tile selection, map grid)
      */
     public void initialize() {
+        setupTileSelect();
+
+        GameMap map = new GameMap(15, 15);
+        map.setTile(1, 2, TileType.WALL);
+        map.setTile(1, 3, TileType.WALL);
+
+        loadMap(map);
+    }
+
+    /**
+     * Sets up the tile selection pane with a button for each tile type, organized in tabs
+     */
+    // TODO: Add a label to identify the tiles (two potions have the same texture)
+    private void setupTileSelect() {
         // Create a tab with an HBox for each tile group
         for(String group : tileGroups.keySet()) {
             Tab t = new Tab();
@@ -46,7 +67,7 @@ public class EditorController {
 
             // For each tile in the group, create a button with the correct texture
             for(TileType tile : tileGroups.get(group)) {
-                ImageView imageView = new ImageView(getImage(tile));
+                ImageView imageView = new ImageView(TexturesHelper.getTileImage(tile));
                 // Crop the image to only show the first 80x80 pixels (some textures have several frames, only show the first)
                 imageView.setViewport(new Rectangle2D(0, 0, 79, 79));
 
@@ -60,67 +81,15 @@ public class EditorController {
     }
 
     /**
-     * Gets the image corresponding to the given tile
-     * @param tile The tile to find the texture of
-     * @return An image of the chosen tile's texture
+     * Loads a GameMap into the editor grid
+     * @param map The map to display
      */
-    private Image getImage(TileType tile) {
-        String address;
-
-        switch(tile) {
-            case POTION_LIFE:
-                address = "/Textures/Tiles/Potions/potion_life.png";
-                break;
-            case POTION_POISON:
-                address = "/Textures/Tiles/Potions/potion_poison.png";
-                break;
-            case POTION_SPEED:
-                address = "/Textures/Tiles/Potions/potion_speed.png";
-                break;
-            case POTION_MAGIC:
-                address = "/Textures/Tiles/Potions/potion_magic.png";
-                break;
-            case POTION_PHYSICAL:
-                address = "/Textures/Tiles/Potions/potion_physical.png";
-                break;
-            case POTION_DEFENSE:
-                address = "/Textures/Tiles/Potions/potion_defense.png";
-                break;
-            case KEY:
-                address = "/Textures/Items/key.png";
-                break;
-            case CHICKEN:
-                address = "/Textures/Items/food.png";
-                break;
-            case BOMB:
-                address = "/Textures/Items/smart_bomb.png";
-                break;
-            case TREASURE_CHEST:
-                address = "/Textures/Items/treasure.png";
-                break;
-            case GROUND:
-                address = "/Textures/Tiles/Environment/floor.png";
-                break;
-            case WALL:
-                address = "/Textures/Tiles/Environment/wall.png";
-                break;
-            case DOOR:
-                address = "/Textures/Tiles/Environment/door.png";
-                break;
-            case BONES_SPAWNER:
-                address = "/Textures/Tiles/Spawners/spawner_ghost.png";
-                break;
-            case BOX_SPAWNER:
-                address = "/Textures/Tiles/Spawners/spawner_grunt.png";
-                break;
-            case EXIT:
-                address = "/Textures/Tiles/Environment/exit.png";
-                break;
-            default:
-                address = "bomb_animation"; // TODO: This is a placeholder, add an error texture?
+    public void loadMap(GameMap map) {
+        for(int y = 0; y < map.getHeight(); y++) {
+            for(int x = 0; x < map.getWidth(); x++) {
+                grid.add(new TileDisplay(map.getTile(x, y), TileType.GROUND), x, y);
+            }
         }
-
-        return new Image(getClass().getResource(address).toExternalForm());
     }
 
     /**

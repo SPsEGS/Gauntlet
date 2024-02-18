@@ -8,7 +8,9 @@
 <?import java.lang.Double?>
 <?import javafx.scene.control.TabPane?>
 
-<fx:root fx:id="root" fx:controller="com.teamf5.gauntlet.Controller.EditorController"
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.ScrollPane?>
+<fx:root fx:controller="com.teamf5.gauntlet.Controller.EditorController"
          type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="$windowWidth" minHeight="$windowHeight">
 
@@ -26,7 +28,10 @@
 
     <StackPane>
 
-        <fx:include fx:id="grid" source="EditorGrid.fxml" styleClass="background"/>
+        <ScrollPane fx:id="scroll" prefWidth="$windowWidth" prefHeight="$windowHeight" pannable="true">
+            <GridPane fx:id="grid" styleClass="background">
+            </GridPane>
+        </ScrollPane>
 
         <AnchorPane minWidth="$windowWidth" minHeight="$windowHeight">
             <Button AnchorPane.topAnchor="$offset" AnchorPane.leftAnchor="$offset">Menu</Button>
