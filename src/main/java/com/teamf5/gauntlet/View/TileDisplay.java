@@ -20,6 +20,7 @@ public class TileDisplay extends StackPane {
     private final int textureWidth = 79;
 
     /** The height of the texture (used to only show the first frame on animated / dynamic textures) */
+    @SuppressWarnings({"SuspiciousNameCombination", "FieldCanBeLocal"})
     private final int textureHeight = textureWidth;
 
     /**
@@ -53,9 +54,12 @@ public class TileDisplay extends StackPane {
     }
 
     /**
-     * 
+     * Sets the tile to display
+     * @param tile The type of tile to display
      */
     public void setTile(TileType tile) {
+        this.getChildren().remove(this.foreground);
         createForeground(tile);
+        this.getChildren().add(this.foreground);
     }
 }

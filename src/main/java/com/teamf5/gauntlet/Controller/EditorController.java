@@ -48,12 +48,13 @@ public class EditorController {
     /** The different values of tiles that can be selected, organized in groups to be shown in different tabs */
     private final Map<String, List<TileType>> tileGroups = new HashMap<>();
 
-    /** The type of tile that has been selected (to be placed upon a click) */
-    private TileType selectedTileType;
+    /** The type of tile that has been selected (to be placed upon a click). Ground by default to avoid it being null. */
+    private TileType selectedTileType = TileType.GROUND;
 
     /**
      * Creates and adds all dynamically created UI elements to the editor (tile selection, map grid)
      */
+    @FXML
     public void initialize() {
         initTileGroups();
         setupTileSelect();
@@ -85,12 +86,7 @@ public class EditorController {
                 imageView.setViewport(new Rectangle2D(0, 0, 79, 79));
 
                 Button button = new Button("", imageView);
-                button.addEventHandler(ActionEvent.ACTION, new EventHandler<>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        selectedTileType = tile;
-                    }
-                });
+                button.addEventHandler(ActionEvent.ACTION, event -> selectedTileType = tile);
 
                 hBox.getChildren().add(button);
             }
@@ -107,14 +103,18 @@ public class EditorController {
     public void loadMap(GameMap map) {
         for(int y = 0; y < map.getHeight(); y++) {
             for(int x = 0; x < map.getWidth(); x++) {
-                final TileType currentTile = map.getTile(x, y);
+                // Create final variables to be able to access them in the anonymous EventHandler
+                final int finalX = x;
+                final int finalY = y;
+                final TileType currentTile = map.getTile(finalX, finalY);
+
                 TileDisplay tileDisplay = new TileDisplay(currentTile);
 
-                tileDisplay.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        System.out.println("Current Tile: " + selectedTileType);
-                        tileDisplay.setTile(currentTile);
+
+                tileDisplay.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    if(selectedTileType != null) {
+                        tileDisplay.setTile(selectedTileType);
+                        map.setTile(finalX, finalY, selectedTileType);
                     }
                 });
 
