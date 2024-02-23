@@ -140,7 +140,7 @@ public class EditorController {
             }
         });
         // This one is to disable the "moving" mouse icon when not clicking the middle mouse button
-        this.scroll.addEventHandler(MouseEvent.DRAG_DETECTED, new EventHandler<MouseEvent>() {
+        this.scroll.addEventFilter(MouseEvent.DRAG_DETECTED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (!event.isMiddleButtonDown())
