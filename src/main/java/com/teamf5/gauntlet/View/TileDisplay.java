@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-// FIXME: Should this class be used for the game as well, or only the editor?
 /**
  * A class to display a tile in the editor
  */
@@ -26,23 +25,12 @@ public class TileDisplay extends StackPane {
     /**
      * Constructor to create a TileDisplay with a background and a foreground.
      * @param foregroundTile The type of tile in the foreground
-     * @param backgroundTile The type of tile in the background
      */
-    public TileDisplay(TileType foregroundTile, TileType backgroundTile) {
+    public TileDisplay(TileType foregroundTile) {
         createForeground(foregroundTile);
-        createBackground(backgroundTile);
+        createBackground();
 
         this.getChildren().addAll(this.background, this.foreground);
-    }
-
-    /**
-     * Constructor to create a TileDisplay with only a background
-     * @param backgroundTile The type of tile in the background
-     */
-    public TileDisplay(TileType backgroundTile) {
-        createBackground(backgroundTile);
-
-        this.getChildren().add(this.background);
     }
 
     /**
@@ -57,13 +45,17 @@ public class TileDisplay extends StackPane {
     }
 
     /**
-     * Initialize the background ImageView with the chosen TileType's texture.
-     * @param tile The type of tile to put in the background
+     * Initialize the background ImageView with the ground texture
      */
-    private void createBackground(TileType tile) {
-        Image backgroundImage = TexturesHelper.getTileImage(tile);
+    private void createBackground() {
+        Image backgroundImage = TexturesHelper.getTileImage(TileType.GROUND);
         this.background = new ImageView(backgroundImage);
-        // Only show the first frame of the texture
-        this.foreground.setViewport(new Rectangle2D(0, 0, textureWidth, textureHeight));
+    }
+
+    /**
+     * 
+     */
+    public void setTile(TileType tile) {
+        createForeground(tile);
     }
 }
