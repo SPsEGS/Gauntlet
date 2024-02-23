@@ -3,6 +3,7 @@ package com.teamf5.gauntlet.Controller;
 import com.teamf5.gauntlet.Model.Editor.GameMap;
 import com.teamf5.gauntlet.View.TexturesHelper;
 import com.teamf5.gauntlet.View.TileDisplay;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
@@ -10,6 +11,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
 
 import com.teamf5.gauntlet.Model.Editor.TileType;
@@ -47,11 +50,13 @@ public class EditorController {
     public void initialize() {
         setupTileSelect();
 
-        GameMap map = new GameMap(15, 15);
+        GameMap map = new GameMap(20, 20);
         map.setTile(1, 2, TileType.WALL);
         map.setTile(1, 3, TileType.WALL);
 
         loadMap(map);
+
+        this.setScrollEventFilters();
     }
 
     /**
@@ -116,5 +121,31 @@ public class EditorController {
         this.tileGroups.get("Obstacles").add(TileType.DOOR);
         this.tileGroups.get("Obstacles").add(TileType.BOX_SPAWNER);
         this.tileGroups.get("Obstacles").add(TileType.BONES_SPAWNER);
+    }
+
+    public void setScrollEventFilters() {
+        // This one is to disable panning the pane with the scroll wheel
+        this.scroll.addEventFilter(ScrollEvent.ANY, new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                event.consume();
+            }
+        });
+        // This one is to set the panning button to the middle mouse button
+        this.scroll.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (!event.isMiddleButtonDown())
+                    event.consume();
+            }
+        });
+        // This one is to disable the "moving" mouse icon when not clicking the middle mouse button
+        this.scroll.addEventHandler(MouseEvent.DRAG_DETECTED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (!event.isMiddleButtonDown())
+                    event.consume();
+            }
+        });
     }
 }

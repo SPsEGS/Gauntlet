@@ -10,6 +10,7 @@
 
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.ScrollPane?>
+
 <fx:root fx:controller="com.teamf5.gauntlet.Controller.EditorController"
          type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="$windowWidth" minHeight="$windowHeight">
@@ -28,12 +29,13 @@
 
     <StackPane>
 
-        <ScrollPane fx:id="scroll" prefWidth="$windowWidth" prefHeight="$windowHeight" pannable="true">
+        <ScrollPane fx:id="scroll" prefWidth="$windowWidth" prefHeight="$windowHeight"
+                    pannable="true" hbarPolicy="NEVER" vbarPolicy="NEVER">
             <GridPane fx:id="grid" styleClass="background">
             </GridPane>
         </ScrollPane>
 
-        <AnchorPane minWidth="$windowWidth" minHeight="$windowHeight">
+        <AnchorPane minWidth="$windowWidth" minHeight="$windowHeight" pickOnBounds="false">
             <Button AnchorPane.topAnchor="$offset" AnchorPane.leftAnchor="$offset">Menu</Button>
             <Button AnchorPane.topAnchor="$offset" AnchorPane.rightAnchor="$offset">Theme</Button>
 
