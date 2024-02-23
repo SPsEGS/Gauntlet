@@ -11,8 +11,8 @@ import javafx.stage.Stage;
  */
 public class EditorMain extends Application {
     public void start(Stage stage) {
-        int sceneWidth = 800;
-        int sceneHeight = 600;
+        double sceneWidth = 1280.0;
+        double sceneHeight = 720.0;
 
         Editor editor = new Editor();
         Scene scene = new Scene(editor, sceneWidth, sceneHeight);
@@ -22,5 +22,9 @@ public class EditorMain extends Application {
 
         stage.setScene(scene);
         stage.show();
+
+        // i use arch btw
+        stage.setWidth(1280.0);
+        stage.setHeight(720.0);
     }
 }
