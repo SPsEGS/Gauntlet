@@ -1,24 +1,21 @@
 package com.teamf5.gauntlet.Controller;
 
-import com.teamf5.gauntlet.Model.Editor.GameMap;
+import com.teamf5.gauntlet.Model.Editor.*;
 import com.teamf5.gauntlet.View.TexturesHelper;
 import com.teamf5.gauntlet.View.TileDisplay;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
 
-import com.teamf5.gauntlet.Model.Editor.TileType;
 import javafx.scene.layout.HBox;
-
+import javafx.stage.FileChooser;
 import java.util.*;
 
 /**
@@ -37,9 +34,6 @@ public class EditorController {
     @FXML
     private TabPane tileSelect;
 
-    /** The button to open the menu */
-    @FXML
-    private Button menuButton;
 
     /** The button to change the theme */
     @FXML
@@ -50,6 +44,9 @@ public class EditorController {
 
     /** The type of tile that has been selected (to be placed upon a click) */
     private TileType selectedTileType;
+
+    private GameMap map;
+    private String filename = null;
 
     /**
      * Creates and adds all dynamically created UI elements to the editor (tile selection, map grid)
@@ -121,6 +118,8 @@ public class EditorController {
                 grid.add(tileDisplay, x, y);
             }
         }
+
+        this.map = map;
     }
 
     /**
@@ -149,7 +148,62 @@ public class EditorController {
         this.tileGroups.get("Obstacles").add(TileType.BONES_SPAWNER);
     }
 
-    public void setScrollEventFilters() {
+    public void onNew() {
+        // FIXME: Add a modal dialog to ask for user confirmation
+        this.filename = null;
+        this.loadMap(new GameMap(20, 20));
+    }
+
+    public void onSave() {
+        if (this.filename == null)
+            this.onSaveAs();
+
+        FileSaver saver = new FileSaver(this.map, this.filename);
+        saver.saveBinary();
+    }
+
+    public void onSaveAs() {
+        FileChooser dialog = new FileChooser();
+        dialog.setTitle("Save map as");
+        dialog.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Gauntlet binary map file", "*" + FileProperties.getFileExtensionBinary())
+        );
+
+        String filenameWithExtension = dialog.showSaveDialog(null).getName();
+        // Strip the extension
+        String filename = filenameWithExtension.substring(0, filenameWithExtension.lastIndexOf('.'));
+
+        this.filename = filename;
+        this.onSave();
+    }
+
+    public void onOpen() {
+        FileChooser dialog = new FileChooser();
+        dialog.setTitle("Open a map file");
+        dialog.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Gauntlet binary map file", "*" + FileProperties.getFileExtensionBinary())
+        );
+
+        String filenameWithExtension = dialog.showOpenDialog(null).getName();
+        // Strip the extension
+        String filename = filenameWithExtension.substring(0, filenameWithExtension.lastIndexOf('.'));
+
+        FileLoader loader = new FileLoader(filename);
+        GameMap map = loader.loadBinary();
+        this.loadMap(map);
+        this.filename = filename;
+    }
+
+    public void onShowShortcuts() {
+        System.out.println("do something");
+    }
+
+    public void onQuit() {
+        // FIXME: Maybe replace this with a change of scene (geometry dash reference????????)
+        Platform.exit();
+    }
+
+    private void setScrollEventFilters() {
         // This one is to disable panning the pane with the scroll wheel
         this.scroll.addEventFilter(ScrollEvent.ANY, new EventHandler<>() {
             @Override
