@@ -22,13 +22,15 @@ public enum TileType {
     GROUND,
     WALL,
     DOOR,
+    EXIT,
+
+    // Spawners
     GHOST_SPAWNER_1,
     GHOST_SPAWNER_2,
     GHOST_SPAWNER_3,
     OTHER_SPAWNER_1,
     OTHER_SPAWNER_2,
     OTHER_SPAWNER_3,
-    EXIT,
 
     // Player starts
     PLAYER_START_1,

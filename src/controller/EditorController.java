@@ -20,6 +20,7 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import view.TilesHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class EditorController {
                 // Crop the image to only show the first 80x80 pixels (some textures have several frames, only show the first)
                 imageView.setViewport(new Rectangle2D(0, 0, 79, 79));
 
-                Button button = new Button("", imageView);
+                Button button = new Button(TilesHelper.getTileName(tile), imageView);
                 button.addEventHandler(ActionEvent.ACTION, event -> selectedTileType = tile);
 
                 hBox.getChildren().add(button);
