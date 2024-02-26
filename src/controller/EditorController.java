@@ -67,7 +67,7 @@ public class EditorController {
     @FXML
     public void initialize() {
         root.setOnDragDetected(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
+            if (event.getButton() == MouseButton.PRIMARY || event.getButton() == MouseButton.SECONDARY) {
                 event.consume();
                 root.startFullDrag();
             }
@@ -85,7 +85,6 @@ public class EditorController {
     /**
      * Sets up the tile selection pane with a button for each tile type, organized in tabs
      */
-    // TODO: Add a label to identify the tiles (two potions have the same texture)
     private void setupTileSelect() {
         // Create a tab with an HBox for each tile group
         for(String group : tileGroups.keySet()) {
@@ -117,21 +116,37 @@ public class EditorController {
         }
     }
 
+    // FIXME: Code duplication, hard-coded ground value. I just didn't find anything better for now.
+    private void removeTile(int x, int y, TileDisplay tileDisplay) {
+        tileDisplay.setTile(TileType.GROUND);
+        map.setTile(x, y, TileType.GROUND);
+    }
+
     private TileDisplay createTileDisplay(TileType currentTile, int x, int y) {
         TileDisplay tileDisplay = new TileDisplay(currentTile);
 
-        // Place one tile when clicking
+        // Place / remove one tile when clicking
         tileDisplay.setOnMouseClicked(event -> {
             if(event.getButton() == MouseButton.PRIMARY) {
                 event.consume();
                 setTile(x, y, tileDisplay);
             }
+            else if(event.getButton() == MouseButton.SECONDARY) {
+                event.consume();
+                removeTile(x, y, tileDisplay);
+            }
         });
 
-        // Place several tiles when dragging
+        // Place / remove tiles when dragging
         tileDisplay.setOnMouseDragEntered( event -> {
-            event.consume();
-            setTile(x, y, tileDisplay);
+            if(event.getButton() == MouseButton.PRIMARY) {
+                event.consume();
+                setTile(x, y, tileDisplay);
+            }
+            else if(event.getButton() == MouseButton.SECONDARY) {
+                event.consume();
+                removeTile(x, y, tileDisplay);
+            }
         });
 
         return tileDisplay;
