@@ -25,7 +25,7 @@ public class Main extends Application {
         double width = 300.0, height = 200.0;
 
         Scene scene = new Scene(myPane, width, height);
-        scene.getStylesheets().add(getClass().getResource("/Style/darkTheme.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/style/darkTheme.css").toExternalForm());
 
         myPane.getStyleClass().add("background");
 
