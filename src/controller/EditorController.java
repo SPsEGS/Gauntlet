@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.Event;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import model.editor.*;
@@ -7,7 +8,6 @@ import view.TexturesHelper;
 import view.TileDisplay;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
@@ -252,20 +252,12 @@ public class EditorController {
 
     private void setScrollEventFilters() {
         // This one is to disable panning the pane with the scroll wheel
-        this.scroll.addEventFilter(ScrollEvent.ANY, new EventHandler<>() {
-            @Override
-            public void handle(ScrollEvent event) {
-                event.consume();
-            }
-        });
+        this.scroll.addEventFilter(ScrollEvent.ANY, Event::consume);
 
         // This one is to set the panning button to the middle mouse button
-        this.scroll.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (!event.isMiddleButtonDown())
-                    event.consume();
-            }
+        this.scroll.addEventFilter(MouseEvent.MOUSE_DRAGGED, event -> {
+            if (!event.isMiddleButtonDown())
+                event.consume();
         });
 
         // FIXME: This literally disables all other mouse events so I can't properly place tiles.
