@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.shape.Box?>
+<fx:root fx:controller="com.teamf5.gauntlet.Controller.HallOfFlameController" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" minWidth="$windowWidth" minHeight="$windowHeight">
+
+    <fx:define>
+        <Double fx:id="windowWidth" fx:value="700"/>
+    </fx:define>
+    <fx:define>
+        <Double fx:id="windowHeight" fx:value="700"/>
+    </fx:define>
+
+    <VBox alignment="CENTER" minWidth="$windowWidth" minHeight="$windowHeight">
+        <Label text="HALL OF FLAME" styleClass="title"/>
+        <Button>Back</Button>
+    </VBox>
+
+</fx:root>

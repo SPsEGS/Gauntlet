@@ -1,0 +1,20 @@
+@import url("basicThemeNoColors.css");
+
+.background {
+    -fx-background-color: #e9d8ef;
+}
+
+.button {
+    -fx-background-color: #c4b2ff;
+    -fx-text-fill: white;
+    -fx-border-color: black;
+}
+
+.button:hover {
+    /* -fx-background-color: #323246; */
+    -fx-background-color: #c9baf6;
+    -fx-text-fill: white;
+}
+.button:pressed {
+    -fx-background-color: #cea1f3;
+}
