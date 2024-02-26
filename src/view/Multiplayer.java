@@ -1,4 +1,4 @@
-package com.teamf5.gauntlet.View;
+package view;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
