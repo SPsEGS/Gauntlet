@@ -16,6 +16,8 @@ import javafx.scene.layout.GridPane;
 
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+
+import java.io.File;
 import java.util.*;
 
 /**
@@ -169,7 +171,12 @@ public class EditorController {
                 new FileChooser.ExtensionFilter("Gauntlet binary map file", "*" + FileProperties.getFileExtensionBinary())
         );
 
-        String filenameWithExtension = dialog.showSaveDialog(null).getName();
+        File file = dialog.showOpenDialog(null);
+        if (file == null)
+            return;
+
+        String filenameWithExtension = file.getName();
+
         // Strip the extension
         String filename = filenameWithExtension.substring(0, filenameWithExtension.lastIndexOf('.'));
 
@@ -184,7 +191,12 @@ public class EditorController {
                 new FileChooser.ExtensionFilter("Gauntlet binary map file", "*" + FileProperties.getFileExtensionBinary())
         );
 
-        String filenameWithExtension = dialog.showOpenDialog(null).getName();
+        File file = dialog.showOpenDialog(null);
+        if (file == null)
+            return;
+
+        String filenameWithExtension = file.getName();
+
         // Strip the extension
         String filename = filenameWithExtension.substring(0, filenameWithExtension.lastIndexOf('.'));
 
