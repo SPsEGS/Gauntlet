@@ -171,16 +171,11 @@ public class EditorController {
                 new FileChooser.ExtensionFilter("Gauntlet binary map file", "*" + FileProperties.getFileExtensionBinary())
         );
 
-        File file = dialog.showOpenDialog(null);
+        File file = dialog.showSaveDialog(null);
         if (file == null)
             return;
 
-        String filenameWithExtension = file.getName();
-
-        // Strip the extension
-        String filename = filenameWithExtension.substring(0, filenameWithExtension.lastIndexOf('.'));
-
-        this.filename = filename;
+        this.filename = file.getName();
         this.onSave();
     }
 
@@ -195,15 +190,11 @@ public class EditorController {
         if (file == null)
             return;
 
-        String filenameWithExtension = file.getName();
+        this.filename = file.getName();
 
-        // Strip the extension
-        String filename = filenameWithExtension.substring(0, filenameWithExtension.lastIndexOf('.'));
-
-        FileLoader loader = new FileLoader(filename);
+        FileLoader loader = new FileLoader(this.filename);
         GameMap map = loader.loadBinary();
         this.loadMap(map);
-        this.filename = filename;
     }
 
     public void onShowShortcuts() {

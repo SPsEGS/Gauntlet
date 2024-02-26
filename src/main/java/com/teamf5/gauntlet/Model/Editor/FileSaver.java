@@ -13,11 +13,14 @@ public class FileSaver {
     /**
      * Creates a new FileSaver.
      * @param map The map you want to save.
-     * @param name The name of the file containing the map, without the extension.
+     * @param name The name of the file containing the map, with or without the extension.
      */
     public FileSaver(GameMap map, String name) {
         this.MAP = map;
-        this.FILENAME = name + FileProperties.getFileExtensionBinary();
+        if (name.endsWith(FileProperties.getFileExtensionBinary()))
+            this.FILENAME = name;
+        else
+            this.FILENAME = name + FileProperties.getFileExtensionBinary();
     }
 
     /**

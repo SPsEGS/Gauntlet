@@ -11,10 +11,13 @@ public class FileLoader {
 
     /**
      * Creates a new FileLoader.
-     * @param name The name of the file containing the map, without the extension.
+     * @param name The name of the file containing the map, with or without the extension.
      */
     public FileLoader(String name) {
-        this.FILENAME = name + FileProperties.getFileExtensionBinary();
+        if (name.endsWith(FileProperties.getFileExtensionBinary()))
+            this.FILENAME = name;
+        else
+            this.FILENAME = name + FileProperties.getFileExtensionBinary();
     }
 
     /**
