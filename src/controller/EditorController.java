@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.Pane;
 import model.editor.*;
 import view.TexturesHelper;
 import view.TileDisplay;
@@ -29,6 +31,9 @@ import java.util.Map;
  * The controller for the main view of the Editor.
  */
 public class EditorController {
+    @FXML
+    private Pane root;
+
     /** The scroll pane used to navigate the map's. Contains the map's grid pane. */
     @FXML
     private ScrollPane scroll;
@@ -40,7 +45,6 @@ public class EditorController {
     /** The TabPane containing the groups of buttons to select a tile */
     @FXML
     private TabPane tileSelect;
-
 
     /** The button to change the theme */
     @FXML
@@ -56,16 +60,21 @@ public class EditorController {
     private String filename = null;
 
     /**
-     * Creates and adds all dynamically created UI elements to the editor (tile selection, map grid)
+     * Sets up the editor's main scene.
+     * Creates and adds all dynamically created UI elements to the editor (tile selection, map grid).
      */
     @FXML
     public void initialize() {
+        root.setOnDragDetected(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                event.consume();
+                root.startFullDrag();
+            }
+        });
         initTileGroups();
         setupTileSelect();
 
         GameMap map = new GameMap(20, 20);
-        map.setTile(1, 2, TileType.WALL);
-        map.setTile(1, 3, TileType.WALL);
 
         loadMap(map);
 
@@ -114,8 +123,8 @@ public class EditorController {
 
                 TileDisplay tileDisplay = new TileDisplay(currentTile);
 
-
-                tileDisplay.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                tileDisplay.setOnMouseDragEntered( event -> {
+                    event.consume();
                     if(selectedTileType != null) {
                         tileDisplay.setTile(selectedTileType);
                         map.setTile(finalX, finalY, selectedTileType);
@@ -151,8 +160,20 @@ public class EditorController {
         this.tileGroups.get("Obstacles").add(TileType.GROUND);
         this.tileGroups.get("Obstacles").add(TileType.WALL);
         this.tileGroups.get("Obstacles").add(TileType.DOOR);
-        this.tileGroups.get("Obstacles").add(TileType.BOX_SPAWNER);
-        this.tileGroups.get("Obstacles").add(TileType.BONES_SPAWNER);
+
+        this.tileGroups.put("Spawners", new ArrayList<>());
+        this.tileGroups.get("Spawners").add(TileType.GHOST_SPAWNER_1);
+        this.tileGroups.get("Spawners").add(TileType.GHOST_SPAWNER_2);
+        this.tileGroups.get("Spawners").add(TileType.GHOST_SPAWNER_3);
+        this.tileGroups.get("Spawners").add(TileType.OTHER_SPAWNER_1);
+        this.tileGroups.get("Spawners").add(TileType.OTHER_SPAWNER_2);
+        this.tileGroups.get("Spawners").add(TileType.OTHER_SPAWNER_3);
+
+        this.tileGroups.put("Players", new ArrayList<>());
+        this.tileGroups.get("Players").add(TileType.PLAYER_START_1);
+        this.tileGroups.get("Players").add(TileType.PLAYER_START_2);
+        this.tileGroups.get("Players").add(TileType.PLAYER_START_3);
+        this.tileGroups.get("Players").add(TileType.PLAYER_START_4);
     }
 
     public void onNew() {
@@ -219,6 +240,7 @@ public class EditorController {
                 event.consume();
             }
         });
+
         // This one is to set the panning button to the middle mouse button
         this.scroll.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<>() {
             @Override
@@ -227,13 +249,15 @@ public class EditorController {
                     event.consume();
             }
         });
+
+        // FIXME: This literally disables all other mouse events so I can't properly place tiles.
         // This one is to disable the "moving" mouse icon when not clicking the middle mouse button
-        this.scroll.addEventFilter(MouseEvent.DRAG_DETECTED, new EventHandler<>() {
+        /*this.scroll.addEventFilter(MouseEvent.DRAG_DETECTED, new EventHandler<>() {
             @Override
             public void handle(MouseEvent event) {
                 if (!event.isMiddleButtonDown())
                     event.consume();
             }
-        });
+        });*/
     }
 }

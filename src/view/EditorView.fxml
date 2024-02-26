@@ -13,7 +13,7 @@
 
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<fx:root fx:controller="controller.EditorController"
+<fx:root fx:id="root" fx:controller="controller.EditorController"
          type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="$windowWidth" minHeight="$windowHeight">
 

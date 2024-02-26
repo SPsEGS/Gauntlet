@@ -61,17 +61,19 @@ public final class TexturesHelper {
             case DOOR:
                 address = "/textures/Tiles/Environment/door.png";
                 break;
-            case BONES_SPAWNER:
+            case GHOST_SPAWNER_1, GHOST_SPAWNER_2, GHOST_SPAWNER_3:
                 address = "/textures/Tiles/Spawners/spawner_ghost.png";
                 break;
-            case BOX_SPAWNER:
+            case OTHER_SPAWNER_1, OTHER_SPAWNER_2, OTHER_SPAWNER_3:
                 address = "/textures/Tiles/Spawners/spawner_grunt.png";
                 break;
             case EXIT:
                 address = "/textures/Tiles/Environment/exit.png";
                 break;
+            // TODO: Add textures for player starts
             default:
-                address = "bomb_animation"; // TODO: This is a placeholder, add an error texture?
+                address = "/textures/Effects/bomb_animation.gif"; // TODO: This is a placeholder, add an error texture?
+                break;
         }
 
         return new Image(TexturesHelper.class.getResource(address).toExternalForm());
