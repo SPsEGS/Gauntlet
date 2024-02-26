@@ -109,6 +109,33 @@ public class EditorController {
         }
     }
 
+    private void setTile(int x, int y, TileDisplay tileDisplay) {
+        if(this.selectedTileType != null) {
+            tileDisplay.setTile(this.selectedTileType);
+            map.setTile(x, y, this.selectedTileType);
+        }
+    }
+
+    private TileDisplay createTileDisplay(TileType currentTile, int x, int y) {
+        TileDisplay tileDisplay = new TileDisplay(currentTile);
+
+        // Place one tile when clicking
+        tileDisplay.setOnMouseClicked(event -> {
+            if(event.getButton() == MouseButton.PRIMARY) {
+                event.consume();
+                setTile(x, y, tileDisplay);
+            }
+        });
+
+        // Place several tiles when dragging
+        tileDisplay.setOnMouseDragEntered( event -> {
+            event.consume();
+            setTile(x, y, tileDisplay);
+        });
+
+        return tileDisplay;
+    }
+
     /**
      * Loads a GameMap into the editor grid
      * @param map The map to display
@@ -117,19 +144,9 @@ public class EditorController {
         for(int y = 0; y < map.getHeight(); y++) {
             for(int x = 0; x < map.getWidth(); x++) {
                 // Create final variables to be able to access them in the anonymous EventHandler
-                final int finalX = x;
-                final int finalY = y;
-                final TileType currentTile = map.getTile(finalX, finalY);
+                final TileType currentTile = map.getTile(x, y);
 
-                TileDisplay tileDisplay = new TileDisplay(currentTile);
-
-                tileDisplay.setOnMouseDragEntered( event -> {
-                    event.consume();
-                    if(selectedTileType != null) {
-                        tileDisplay.setTile(selectedTileType);
-                        map.setTile(finalX, finalY, selectedTileType);
-                    }
-                });
+                TileDisplay tileDisplay = createTileDisplay(currentTile, x, y);
 
                 grid.add(tileDisplay, x, y);
             }
