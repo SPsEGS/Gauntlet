@@ -1,7 +1,7 @@
-package com.teamf5.gauntlet.Controller;
+package controller;
 
-import com.teamf5.gauntlet.Model.Editor.GameMap;
-import com.teamf5.gauntlet.Model.Editor.TileType;
+import model.editor.GameMap;
+import model.editor.TileType;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
