@@ -4,17 +4,15 @@ import javafx.event.Event;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import model.editor.*;
-import view.TexturesHelper;
-import view.TileDisplay;
+import view.TextureView;
+import view.TileView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
@@ -94,11 +92,9 @@ public class EditorController {
 
             // For each tile in the group, create a button with the correct texture
             for(TileType tile : tileGroups.get(group)) {
-                ImageView imageView = new ImageView(TexturesHelper.getTileImage(tile));
-                // Crop the image to only show the first 80x80 pixels (some textures have several frames, only show the first)
-                imageView.setViewport(new Rectangle2D(0, 0, 79, 79));
+                TextureView textureView = new TextureView(tile, 0);
 
-                Button button = new Button(TilesHelper.getTileName(tile), imageView);
+                Button button = new Button(TilesHelper.getTileName(tile), textureView);
                 button.addEventHandler(ActionEvent.ACTION, event -> selectedTileType = tile);
 
                 hBox.getChildren().add(button);
@@ -109,47 +105,47 @@ public class EditorController {
         }
     }
 
-    private void setTile(int x, int y, TileDisplay tileDisplay) {
+    private void setTile(int x, int y, TileView tileView) {
         if(this.selectedTileType != null) {
-            tileDisplay.setTile(this.selectedTileType);
+            tileView.setTile(this.selectedTileType);
             map.setTile(x, y, this.selectedTileType);
         }
     }
 
     // FIXME: Code duplication, hard-coded ground value. I just didn't find anything better for now.
-    private void removeTile(int x, int y, TileDisplay tileDisplay) {
-        tileDisplay.setTile(TileType.GROUND);
+    private void removeTile(int x, int y, TileView tileView) {
+        tileView.setTile(TileType.GROUND);
         map.setTile(x, y, TileType.GROUND);
     }
 
-    private TileDisplay createTileDisplay(TileType currentTile, int x, int y) {
-        TileDisplay tileDisplay = new TileDisplay(currentTile);
+    private TileView createTileDisplay(TileType currentTile, int x, int y) {
+        TileView tileView = new TileView(currentTile);
 
         // Place / remove one tile when clicking
-        tileDisplay.setOnMouseClicked(event -> {
+        tileView.setOnMouseClicked(event -> {
             if(event.getButton() == MouseButton.PRIMARY) {
                 event.consume();
-                setTile(x, y, tileDisplay);
+                setTile(x, y, tileView);
             }
             else if(event.getButton() == MouseButton.SECONDARY) {
                 event.consume();
-                removeTile(x, y, tileDisplay);
+                removeTile(x, y, tileView);
             }
         });
 
         // Place / remove tiles when dragging
-        tileDisplay.setOnMouseDragEntered( event -> {
+        tileView.setOnMouseDragEntered(event -> {
             if(event.getButton() == MouseButton.PRIMARY) {
                 event.consume();
-                setTile(x, y, tileDisplay);
+                setTile(x, y, tileView);
             }
             else if(event.getButton() == MouseButton.SECONDARY) {
                 event.consume();
-                removeTile(x, y, tileDisplay);
+                removeTile(x, y, tileView);
             }
         });
 
-        return tileDisplay;
+        return tileView;
     }
 
     /**
@@ -162,9 +158,9 @@ public class EditorController {
                 // Create final variables to be able to access them in the anonymous EventHandler
                 final TileType currentTile = map.getTile(x, y);
 
-                TileDisplay tileDisplay = createTileDisplay(currentTile, x, y);
+                TileView tileView = createTileDisplay(currentTile, x, y);
 
-                grid.add(tileDisplay, x, y);
+                grid.add(tileView, x, y);
             }
         }
 
