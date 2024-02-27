@@ -55,7 +55,10 @@ public class EditorController {
     /** The type of tile that has been selected (to be placed upon a click). Ground by default to avoid it being null. */
     private TileType selectedTileType = TileType.GROUND;
 
+    /** The map that is currently being edited. */
     private GameMap map;
+
+    /** The name of the selected file to save or load. */
     private String filename = null;
 
     /**
@@ -105,6 +108,13 @@ public class EditorController {
         }
     }
 
+    /**
+     * Sets the tile at the given coordinates to the given tile type.
+     * @param x The x coordinate of the tile to set.
+     * @param y The y coordinate of the tile to set.
+     * @param tileView The TileView to update.
+     */
+    // FIXME: Having to give a reference to the TileView feels wrong.
     private void setTile(int x, int y, TileView tileView) {
         if(this.selectedTileType != null) {
             tileView.setTile(this.selectedTileType);
@@ -112,14 +122,28 @@ public class EditorController {
         }
     }
 
+
+    /**
+     * Sets the tile at the given coordinates to the GROUND tile type.
+     * @param x The x coordinate of the tile to set.
+     * @param y The y coordinate of the tile to set.
+     * @param tileView The TileView to update.
+     */
     // FIXME: Code duplication, hard-coded ground value. I just didn't find anything better for now.
     private void removeTile(int x, int y, TileView tileView) {
         tileView.setTile(TileType.GROUND);
         map.setTile(x, y, TileType.GROUND);
     }
 
-    private TileView createTileDisplay(TileType currentTile, int x, int y) {
-        TileView tileView = new TileView(currentTile);
+    /**
+     * Creates a TileView with the given parameters.
+     * @param tile The type of tile that this TileView will hold.
+     * @param x The x coordinate of the tile.
+     * @param y The y coordinate of the tile.
+     * @return A new TileView with the given parameters.
+     */
+    private TileView createTileView(TileType tile, int x, int y) {
+        TileView tileView = new TileView(tile);
 
         // Place / remove one tile when clicking
         tileView.setOnMouseClicked(event -> {
@@ -158,7 +182,7 @@ public class EditorController {
                 // Create final variables to be able to access them in the anonymous EventHandler
                 final TileType currentTile = map.getTile(x, y);
 
-                TileView tileView = createTileDisplay(currentTile, x, y);
+                TileView tileView = createTileView(currentTile, x, y);
 
                 grid.add(tileView, x, y);
             }
@@ -205,12 +229,18 @@ public class EditorController {
         this.tileGroups.get("Players").add(TileType.PLAYER_START_4);
     }
 
+    /** Resets the map that is currently being edited.  */
+    // FIXME: Add a way to choose the size of the map.
     public void onNew() {
         // FIXME: Add a modal dialog to ask for user confirmation
         this.filename = null;
         this.loadMap(new GameMap(20, 20));
     }
 
+    /**
+     * Saves the current map to the file previously selected by the user (during the last Save As).
+     * If Save As has never been run (and no file has been chosen), automatically executes Save As instead.
+     */
     public void onSave() {
         if (this.filename == null)
             this.onSaveAs();
@@ -219,6 +249,7 @@ public class EditorController {
         saver.saveBinary();
     }
 
+     /** Opens a file picker window and saves the current map to the file selected by the user. */
     public void onSaveAs() {
         FileChooser dialog = new FileChooser();
         dialog.setTitle("Save map as");
@@ -234,6 +265,7 @@ public class EditorController {
         this.onSave();
     }
 
+    /** Opens a file picker and loads the map from the file selected by the user. */
     public void onOpen() {
         FileChooser dialog = new FileChooser();
         dialog.setTitle("Open a map file");
@@ -252,15 +284,18 @@ public class EditorController {
         this.loadMap(map);
     }
 
+    // FIXME: Add documentation when you know what you're doing.
     public void onShowShortcuts() {
         System.out.println("do something");
     }
 
+    /** Quits the editor. */
     public void onQuit() {
         // FIXME: Maybe replace this with a change of scene (geometry dash reference????????)
         Platform.exit();
     }
 
+    /** Sets the event filters needed to properly handle panning the view with the mouse. */
     private void setScrollEventFilters() {
         // This one is to disable panning the pane with the scroll wheel
         this.scroll.addEventFilter(ScrollEvent.ANY, Event::consume);
@@ -271,7 +306,7 @@ public class EditorController {
                 event.consume();
         });
 
-        // FIXME: This literally disables all other mouse events so I can't properly place tiles.
+        // FIXME: This literally disables all other mouse drag events so I can't properly place tiles.
         // This one is to disable the "moving" mouse icon when not clicking the middle mouse button
         /*this.scroll.addEventFilter(MouseEvent.DRAG_DETECTED, new EventHandler<>() {
             @Override
