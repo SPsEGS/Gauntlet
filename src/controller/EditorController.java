@@ -79,13 +79,13 @@ public class EditorController {
         });
 
         this.grid = new GridPane();
-        this.grid.getStyleClass().add("background");
 
         this.scroll = new ZoomableScrollPane(this.grid);
         this.scroll.setPannable(true);
         this.scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         this.scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         this.scroll.setPrefSize(1280,720);
+        this.scroll.getStyleClass().add("background");
 
         this.zoom.getChildren().add(this.scroll);
 
