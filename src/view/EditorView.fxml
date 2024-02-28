@@ -61,9 +61,9 @@
             </TabPane>
 
             <HBox AnchorPane.bottomAnchor="$offset2" AnchorPane.rightAnchor="$offset">
-                <Button fx:id="zoomPlus" onAction="#zoomMore">-</Button>
+                <Button fx:id="zoomMinus" onAction="#zoomLess">-</Button>
                 <Button>loupe</Button>
-                <Button fx:id="zoomMinus" onAction="#zoomLess">+</Button>
+                <Button fx:id="zoomPlus" onAction="#zoomMore">+</Button>
             </HBox>
         </AnchorPane>
 

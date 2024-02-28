@@ -107,14 +107,14 @@ public class EditorController {
 
     @FXML
     public void zoomMore() {
-        this.grid.setScaleX(this.grid.getScaleX() - 0.1);
-        this.grid.setScaleY(this.grid.getScaleY() - 0.1);
+        this.grid.setScaleX(this.grid.getScaleX() * 1.90);
+        this.grid.setScaleY(this.grid.getScaleY() * 1.90);
     }
 
     @FXML
     public void zoomLess() {
-        this.grid.setScaleX(this.grid.getScaleX() + 0.1);
-        this.grid.setScaleY(this.grid.getScaleY() + 0.1);
+        this.grid.setScaleX(this.grid.getScaleX() * 0.53);
+        this.grid.setScaleY(this.grid.getScaleY() * 0.53);
     }
 
     /**
