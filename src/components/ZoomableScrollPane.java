@@ -33,7 +33,7 @@ public class ZoomableScrollPane extends ScrollPane {
         Node outerNode = centeredNode(node);
         outerNode.setOnScroll(e -> {
             e.consume();
-            onScroll(e.getTextDeltaY(), new Point2D(e.getX(), e.getY()));
+            onScroll(e.getDeltaY(), new Point2D(e.getX(), e.getY()));
         });
         return outerNode;
     }
