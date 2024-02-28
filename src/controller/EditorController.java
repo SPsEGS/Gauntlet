@@ -139,6 +139,7 @@ public class EditorController {
 
             t.setContent(hBox);
             tileSelect.getTabs().add(t);
+            hBox.getStyleClass().add("tabContent");
         }
     }
 

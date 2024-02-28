@@ -30,7 +30,7 @@
 
     <fx:define>
         <Double fx:id="offset" fx:value="25.0"/>
-        <Double fx:id="offset2" fx:value="125.0"/>
+        <Double fx:id="offset2" fx:value="140.0"/>
         <Double fx:id="tabHeight" fx:value="125"/>
     </fx:define>
 
