@@ -79,6 +79,7 @@ public class EditorController {
         });
 
         this.grid = new GridPane();
+        this.grid.getStyleClass().add("background");
 
         this.scroll = new ZoomableScrollPane(this.grid);
         this.scroll.setPannable(true);
