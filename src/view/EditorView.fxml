@@ -30,6 +30,7 @@
 
     <fx:define>
         <Double fx:id="offset" fx:value="25.0"/>
+        <Double fx:id="offset2" fx:value="125.0"/>
         <Double fx:id="tabHeight" fx:value="125"/>
     </fx:define>
 
@@ -58,6 +59,12 @@
             <TabPane fx:id="tileSelect" tabClosingPolicy="UNAVAILABLE"
                      AnchorPane.rightAnchor="$offset" AnchorPane.leftAnchor="$offset" AnchorPane.bottomAnchor="$offset">
             </TabPane>
+
+            <HBox AnchorPane.bottomAnchor="$offset2" AnchorPane.rightAnchor="$offset">
+                <Button fx:id="zoomPlus" onAction="#zoomMore">-</Button>
+                <Button>loupe</Button>
+                <Button fx:id="zoomMinus" onAction="#zoomLess">+</Button>
+            </HBox>
         </AnchorPane>
 
         <AnchorPane visible="false" styleClass="overlay">
