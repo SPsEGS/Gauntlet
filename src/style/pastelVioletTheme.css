@@ -1,20 +1,16 @@
 @import url("basicThemeNoColors.css");
 
-.background {
-    -fx-background-color: #e9d8ef;
-}
+* {
+    -fx-custom-background-color: #e9d8ef;
 
-.button {
-    -fx-background-color: #c4b2ff;
-    -fx-text-fill: white;
-    -fx-border-color: black;
-}
+    -fx-custom-element-background-color: #c4b2ff;
+    -fx-custom-element-selected-color: #B68BD9;
 
-.button:hover {
-    /* -fx-background-color: #323246; */
-    -fx-background-color: #c9baf6;
-    -fx-text-fill: white;
-}
-.button:pressed {
-    -fx-background-color: #cea1f3;
+    -fx-custom-element-border-color: black;
+    -fx-custom-element-selected-border-color: #e6e6e6;
+
+    -fx-custom-element-text-color: white;
+
+    -fx-custom-button-pressed-color: #cea1f3;
+    -fx-custom-button-hovered-color: #c9baf6;
 }
