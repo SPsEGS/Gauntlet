@@ -1,9 +1,44 @@
-.button {
+/* Color variable definitions */
+* {
+    -fx-custom-background-color: #3E3E48;
+
+    -fx-custom-element-background-color: #272735;
+    -fx-custom-element-selected-color: #686877;
+
+    -fx-custom-element-border-color: black;
+    -fx-custom-element-selected-border-color: #e6e6e6;
+
+    -fx-custom-element-text-color: white;
+
+    -fx-custom-button-pressed-color: #4b4b4b;
+    -fx-custom-button-hovered-color: #1A1A1A;
+}
+
+.background {
+    -fx-background-color: -fx-custom-background-color;
+}
+
+.button, .menu-button {
     -fx-background-radius: 7px;
     -fx-border-radius: 7px;
     -fx-border-width: 1px;
+
+    -fx-background-color: -fx-custom-element-background-color;
+    -fx-text-fill: -fx-custom-element-text-color;
+    -fx-border-color: -fx-custom-element-border-color;
+}
+
+.button {
     -fx-padding: 5 12 5 12 em;
 }
+
+.button:hover {
+    -fx-background-color: -fx-custom-button-hovered-color;
+}
+.button:pressed {
+    -fx-background-color: #4b4b4b;
+}
+
 
 .mainTitle {
     -fx-font-size: 100px;
@@ -16,10 +51,18 @@
 
 /* BEGIN: TabPane style */
 
+.tab-pane {
+    -fx-background-color: transparent;
+}
+
 .tab {
     -fx-background-radius: 7px;
     -fx-border-radius: 7px;
-    -fx-border-width: 2px;
+    -fx-border-width: 1px;
+
+    -fx-background-color: -fx-custom-element-background-color;
+    -fx-text-base-color: -fx-custom-element-text-color;
+    -fx-border-color: -fx-custom-element-border-color;
 }
 
 /* Selector found in : https://forums.oracle.com/ords/apexds/post/styling-tabpane-css-1983 */
@@ -30,11 +73,24 @@
 .tabContent {
     -fx-background-radius: 7px;
     -fx-border-radius: 7px;
-    -fx-border-width: 2px;
+    -fx-border-width: 3px;
+
+    -fx-background-color: white;
+    -fx-text-base-color: white;
+    -fx-border-color: black;
 }
 
 .tab-pane > .tab-header-area > .tab-header-background {
     -fx-background-color: transparent;
 }
 
+.tab:selected {
+    -fx-background-color: -fx-custom-element-selected-color;
+    -fx-border-color: -fx-custom-element-selected-border-color;
+}
+
 /* END: TabPane style */
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

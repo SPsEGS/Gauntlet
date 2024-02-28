@@ -35,8 +35,8 @@
     <StackPane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0.0">
 
         <ScrollPane fx:id="scroll"
-                    pannable="true" hbarPolicy="NEVER" vbarPolicy="NEVER">
-            <GridPane fx:id="grid" styleClass="background">
+                    pannable="true" hbarPolicy="NEVER" vbarPolicy="NEVER" styleClass="background">
+            <GridPane fx:id="grid">
             </GridPane>
         </ScrollPane>
 
