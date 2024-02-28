@@ -2,14 +2,14 @@ package view;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
 /**
  * The main window of the Editor, allowing the user to build a map with a visual tool, using a set of predefined tiles.
  */
-public class Editor extends Pane {
+public class Editor extends AnchorPane {
 
     /**
      * Creates a new Editor and loads its FXML view.
