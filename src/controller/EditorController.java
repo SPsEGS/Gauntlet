@@ -1,5 +1,6 @@
 package controller;
 
+import components.ZoomableScrollPane;
 import javafx.event.Event;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
@@ -34,12 +35,15 @@ public class EditorController {
     private Pane root;
 
     /** The scroll pane used to navigate the map's. Contains the map's grid pane. */
-    @FXML
+    //@FXML
     private ScrollPane scroll;
 
     /** The grid on which the game map is shown */
-    @FXML
+    //@FXML
     private GridPane grid;
+
+    @FXML
+    private Pane zoom;
 
     /** The TabPane containing the groups of buttons to select a tile */
     @FXML
@@ -73,6 +77,17 @@ public class EditorController {
                 root.startFullDrag();
             }
         });
+
+        this.grid = new GridPane();
+
+        this.scroll = new ZoomableScrollPane(this.grid);
+        this.scroll.setPannable(true);
+        this.scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        this.scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        this.scroll.setPrefSize(1280,720);
+
+        this.zoom.getChildren().add(this.scroll);
+
         initTileGroups();
         setupTileSelect();
 
@@ -298,7 +313,7 @@ public class EditorController {
     /** Sets the event filters needed to properly handle panning the view with the mouse. */
     private void setScrollEventFilters() {
         // This one is to disable panning the pane with the scroll wheel
-        this.scroll.addEventFilter(ScrollEvent.ANY, Event::consume);
+        //this.scroll.addEventFilter(ScrollEvent.ANY, Event::consume);
 
         // This one is to set the panning button to the middle mouse button
         this.scroll.addEventFilter(MouseEvent.MOUSE_DRAGGED, event -> {

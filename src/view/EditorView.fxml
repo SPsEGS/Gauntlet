@@ -16,6 +16,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Label?>
 
+<?import javafx.scene.layout.Pane?>
 <fx:root fx:id="root" fx:controller="controller.EditorController"
          type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="$windowWidth" minHeight="$windowHeight">
@@ -34,11 +35,12 @@
 
     <StackPane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0.0">
 
-        <ScrollPane fx:id="scroll"
-                    pannable="true" hbarPolicy="NEVER" vbarPolicy="NEVER">
-            <GridPane fx:id="grid" styleClass="background">
-            </GridPane>
-        </ScrollPane>
+        <Pane fx:id="zoom"></Pane>
+<!--        <ScrollPane fx:id="scroll"-->
+<!--                    pannable="true" hbarPolicy="NEVER" vbarPolicy="NEVER">-->
+<!--            <GridPane fx:id="grid" styleClass="background">-->
+<!--            </GridPane>-->
+<!--        </ScrollPane>-->
 
         <AnchorPane pickOnBounds="false" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0.0">
             <MenuButton AnchorPane.topAnchor="$offset" AnchorPane.leftAnchor="$offset" text="Menu">
