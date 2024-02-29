@@ -18,10 +18,15 @@ public class TileConnexions {
         int rightInt = booleanToInt(right);
         int topInt = booleanToInt(top);
 
-        int index = leftInt * 0b1000 + bottomInt * 0b0100 + rightInt * 0b0010 + topInt;
+        if (left || bottom || top || right) {
+            int index = leftInt * 0b1000 + bottomInt * 0b0100 + rightInt * 0b0010 + topInt;
 
-        // Our frame numbers (the only thing that uses this value) start at 0, not 1.
-        return index - 1;
+            // Our frame numbers (the only thing that uses this value) start at 0, not 1.
+            return index - 1;
+        }
+        else {
+            return 0;
+        }
     }
 
     public boolean getLeft() {
