@@ -2,7 +2,7 @@ package controller;
 
 import components.ZoomableScrollPane;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import model.editor.*;
 import view.TileConnexions;
 import view.TileView;
@@ -14,8 +14,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import view.TilesHelper;
 
@@ -41,7 +39,10 @@ public class EditorController {
     private GridPane grid;
 
     @FXML
-    private Pane zoom;
+    private AnchorPane anchor;
+
+    @FXML
+    private BorderPane zoom;
 
     /** The TabPane containing the groups of buttons to select a tile */
     @FXML
@@ -69,9 +70,11 @@ public class EditorController {
     /** The name of the selected file to save or load. */
     private String filename = null;
 
+    /** The button to zoom in */
     @FXML
     private Button zoomPlus;
 
+    /** The button to zoom out */
     @FXML
     private Button zoomMinus;
 
@@ -94,10 +97,12 @@ public class EditorController {
         this.scroll.setPannable(true);
         this.scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         this.scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        this.scroll.setPrefSize(1280,720);
         this.scroll.getStyleClass().add("background");
 
-        this.zoom.getChildren().add(this.scroll);
+        this.zoom.setCenter(this.scroll);
+
+        this.scroll.prefWidthProperty().bind(this.root.widthProperty());
+        this.scroll.prefHeightProperty().bind(this.root.heightProperty());
 
         initTileGroups();
         setupTileSelect();
@@ -109,12 +114,18 @@ public class EditorController {
         this.setScrollEventFilters();
     }
 
+    /**
+     * Zoom in the map with the button "+" next to the 🔎
+     */
     @FXML
     public void zoomMore() {
         this.grid.setScaleX(this.grid.getScaleX() * 1.90);
         this.grid.setScaleY(this.grid.getScaleY() * 1.90);
     }
 
+    /**
+     * Zoom out the map with the button "-" next to the 🔎
+     */
     @FXML
     public void zoomLess() {
         this.grid.setScaleX(this.grid.getScaleX() * 0.53);
@@ -403,9 +414,6 @@ public class EditorController {
 
     /** Sets the event filters needed to properly handle panning the view with the mouse. */
     private void setScrollEventFilters() {
-        // This one is to disable panning the pane with the scroll wheel
-        //this.scroll.addEventFilter(ScrollEvent.ANY, Event::consume);
-
         // This one is to set the panning button to the middle mouse button
         this.scroll.addEventFilter(MouseEvent.MOUSE_DRAGGED, event -> {
             if (!event.isMiddleButtonDown())

@@ -21,7 +21,6 @@ public class EditorMain extends Application {
         stage.setScene(scene);
         stage.show();
 
-        // i use arch btw
         stage.setWidth(1280.0);
         stage.setHeight(720.0);
     }
