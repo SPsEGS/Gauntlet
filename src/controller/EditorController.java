@@ -125,7 +125,16 @@ public class EditorController {
     private void initZoom() {
         this.grid = new GridPane();
 
-        this.scroll = new ZoomableScrollPane(this.grid);
+        BorderPane border = new BorderPane();
+
+        border.setCenter(this.grid);
+
+        border.setBottom(createRegion(200.0,200.0));
+        border.setLeft(createRegion(100.0,100.0));
+        border.setRight(createRegion(100.0,100.0));
+        border.setTop(createRegion(80.0,80.0));
+
+        this.scroll = new ZoomableScrollPane(border);
         this.scroll.setPannable(true);
         this.scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         this.scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -136,10 +145,7 @@ public class EditorController {
         this.scroll.prefWidthProperty().bind(this.root.widthProperty());
         this.scroll.prefHeightProperty().bind(this.root.heightProperty());
 
-//        this.zoom.setBottom(createRegion(160.0,160.0));
-//        this.zoom.setLeft(createRegion(100.0,100.0));
-//        this.zoom.setRight(createRegion(100.0,100.0));
-//        this.zoom.setTop(createRegion(80.0,80.0));
+
     }
 
     private Region createRegion(double width, double height) {
