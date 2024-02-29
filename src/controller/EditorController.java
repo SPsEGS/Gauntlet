@@ -2,6 +2,7 @@ package controller;
 
 import model.editor.*;
 import components.ZoomableScrollPane;
+import view.TextureView;
 import view.TileConnexions;
 import view.TileView;
 import view.TilesHelper;
@@ -169,13 +170,15 @@ public class EditorController {
 
             // For each tile in the group, create a button with the correct texture
             for(TileType tile : tileGroups.get(group)) {
-                TileView tileView = new TileView(tile);
-
                 Button button = new Button();
-                button.setGraphic(tileView);
+                button.setGraphic(new TextureView(tile, 0));
 
                 Tooltip buttonToolTip = new Tooltip(TilesHelper.getTileName(tile));
-                buttonToolTip.setShowDelay(new Duration(0));
+
+                // Delay is necessary to prevent the tooltip from blocking the mouse and not being able to click the button on some platforms
+                // There seems to be no way to make a tooltip mouse-transparent despite users reporting this issue since 2013
+                // The bug report was literally marked as "won't fix" 11 years ago, thanks JavaFX.
+                buttonToolTip.setShowDelay(new Duration(25));
 
                 button.setTooltip(buttonToolTip);
 
