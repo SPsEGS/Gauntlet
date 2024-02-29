@@ -34,7 +34,7 @@ public class EditorController {
 
     /** The scroll pane used to navigate the map's. Contains the map's grid pane. */
     //@FXML
-    private ScrollPane scroll;
+    private ZoomableScrollPane scroll;
 
     /** The grid on which the game map is shown */
     //@FXML
@@ -68,6 +68,12 @@ public class EditorController {
 
     /** The name of the selected file to save or load. */
     private String filename = null;
+
+    @FXML
+    private Button zoomPlus;
+
+    @FXML
+    private Button zoomMinus;
 
     /**
      * Sets up the editor's main scene.
@@ -103,6 +109,18 @@ public class EditorController {
         this.setScrollEventFilters();
     }
 
+    @FXML
+    public void zoomMore() {
+        this.grid.setScaleX(this.grid.getScaleX() * 1.90);
+        this.grid.setScaleY(this.grid.getScaleY() * 1.90);
+    }
+
+    @FXML
+    public void zoomLess() {
+        this.grid.setScaleX(this.grid.getScaleX() * 0.53);
+        this.grid.setScaleY(this.grid.getScaleY() * 0.53);
+    }
+
     /**
      * Sets up the tile selection pane with a button for each tile type, organized in tabs
      */
@@ -125,6 +143,7 @@ public class EditorController {
 
             t.setContent(hBox);
             tileSelect.getTabs().add(t);
+            hBox.getStyleClass().add("tabContent");
         }
     }
 
