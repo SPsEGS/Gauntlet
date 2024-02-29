@@ -52,11 +52,22 @@ public class EditorController {
     @FXML
     private Button themeButton;
 
+    /** The button to zoom in */
+    @FXML
+    private Button zoomPlus;
+
+    /** The button to zoom out */
+    @FXML
+    private Button zoomMinus;
+
     /** The different values of tiles that can be selected, organized in groups to be shown in different tabs */
     private final Map<String, List<TileType>> tileGroups = new HashMap<>();
 
     /** The type of tile that has been selected (to be placed upon a click). Ground by default to avoid it being null. */
     private TileType selectedTileType = TileType.GROUND;
+
+    /** The button representing the currently selected tile. */
+    private Button selectedTileButton;
 
     /** The map that is currently being edited. */
     private GameMap map;
@@ -115,7 +126,7 @@ public class EditorController {
     }
 
     /**
-     * Zoom in the map with the button "+" next to the 🔎
+     * Increase the scale (zoom factor) of the grid that displays the map.
      */
     @FXML
     public void zoomMore() {
@@ -124,7 +135,7 @@ public class EditorController {
     }
 
     /**
-     * Zoom out the map with the button "-" next to the 🔎
+     * Increase the scale (zoom factor) of the grid that displays the map.
      */
     @FXML
     public void zoomLess() {
@@ -147,9 +158,22 @@ public class EditorController {
                 TileView tileView = new TileView(tile);
 
                 Button button = new Button(TilesHelper.getTileName(tile), tileView);
-                button.addEventHandler(ActionEvent.ACTION, event -> selectedTileType = tile);
+                button.addEventHandler(ActionEvent.ACTION, event -> {
+                    // Remove the styleClass to highlight the selected tile's button.
+                    this.selectedTileButton.getStyleClass().remove("selected-tile-button");
+
+                    selectedTileType = tile;
+
+                    // Add the styleClass to highlight the selected tile's button.
+                    this.selectedTileButton = button;
+                    button.getStyleClass().add("selected-tile-button");
+                });
 
                 hBox.getChildren().add(button);
+
+                // Initialize the value of selectedTileButton
+                if(tile == TileType.GROUND)
+                    selectedTileButton = button;
             }
 
             t.setContent(hBox);
@@ -185,6 +209,8 @@ public class EditorController {
     private void removeTile(int x, int y, TileView tileView) {
         tileView.setTile(TileType.GROUND);
         map.setTile(x, y, TileType.GROUND);
+
+        updateTileConnexions(x, y);
     }
 
     /**
@@ -229,36 +255,38 @@ public class EditorController {
      * @param map The map to display
      */
     public void loadMap(GameMap map) {
+        this.map = map;
+
         this.tileViews = new TileView[map.getWidth()][map.getHeight()];
 
+        // For every tile in the map
         for(int y = 0; y < map.getHeight(); y++) {
             for(int x = 0; x < map.getWidth(); x++) {
-                // Create final variables to be able to access them in the anonymous EventHandler
-                final TileType currentTile = map.getTile(x, y);
+                TileView tileView = createTileView(map.getTile(x, y), x, y);
 
-                TileView tileView = createTileView(currentTile, x, y);
-
+                // Store the TileView in a 2D array, so we can access it later.
+                // Because we cannot grab an element from the GridPane directly.
+                // There is no duplication because objects in Java are references.
                 tileViews[x][y] = tileView;
+
                 grid.add(tileView, x, y);
             }
         }
 
-        this.map = map;
-
         for(int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {
+                // This has to run after all the tiles and TileViews have been initialised.
                 updateTileConnexions(x, y);
             }
         }
     }
 
-    private boolean isConnectedTile(TileType tile) {
-        return switch (tile) {
-            case WALL, DOOR -> true;
-            default -> false;
-        };
-    }
-
+    /**
+     * Finds the four neighbours of a TileView to update in order to show the correct connected textures.
+     * Then calls the method to change the frame to the correct one on the selected tile and its neighbours.
+     * @param x The x coordinate of the TileView to update.
+     * @param y The y coordinate of the TileView to update.
+     */
     private void updateTileConnexions(int x, int y) {
         List<int[]> coordinateList = new ArrayList<>();
 
@@ -281,10 +309,15 @@ public class EditorController {
         }
     }
 
+    /**
+     * Changes the frame of a TileView to connect with its neighbours.
+     * @param x The x coordinate of the TileView to update.
+     * @param y The y coordinate of the TileView to update.
+     */
     private void updateTileFrame(int x, int y) {
         TileType tile = map.getTile(x, y);
 
-        if (isConnectedTile(this.map.getTile(x, y))) {
+        if (TileConnexions.isConnectedTile(this.map.getTile(x, y))) {
 
             TileConnexions connexions = new TileConnexions();
 
@@ -304,7 +337,10 @@ public class EditorController {
                 connexions.setTop(true);
             }
 
-            tileViews[x][y].setFrame(connexions.getIndex());
+            if(tile == TileType.DOOR)
+                tileViews[x][y].setFrame(connexions.getIndex() - 1);
+            if(tile == TileType.WALL)
+                tileViews[x][y].setFrame(connexions.getIndex());
         }
     }
 
