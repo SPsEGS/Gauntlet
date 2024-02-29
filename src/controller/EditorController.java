@@ -81,14 +81,6 @@ public class EditorController {
     /** The name of the selected file to save or load. */
     private String filename = null;
 
-    /** The button to zoom in */
-    @FXML
-    private Button zoomPlus;
-
-    /** The button to zoom out */
-    @FXML
-    private Button zoomMinus;
-
     /**
      * Sets up the editor's main scene.
      * Creates and adds all dynamically created UI elements to the editor (tile selection, map grid).
@@ -102,18 +94,7 @@ public class EditorController {
             }
         });
 
-        this.grid = new GridPane();
-
-        this.scroll = new ZoomableScrollPane(this.grid);
-        this.scroll.setPannable(true);
-        this.scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        this.scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        this.scroll.getStyleClass().add("background");
-
-        this.zoom.setCenter(this.scroll);
-
-        this.scroll.prefWidthProperty().bind(this.root.widthProperty());
-        this.scroll.prefHeightProperty().bind(this.root.heightProperty());
+        initZoom();
 
         initTileGroups();
         setupTileSelect();
@@ -141,6 +122,33 @@ public class EditorController {
     public void zoomLess() {
         this.grid.setScaleX(this.grid.getScaleX() * 0.53);
         this.grid.setScaleY(this.grid.getScaleY() * 0.53);
+    }
+
+    private void initZoom() {
+        this.grid = new GridPane();
+
+        this.scroll = new ZoomableScrollPane(this.grid);
+        this.scroll.setPannable(true);
+        this.scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        this.scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        this.scroll.getStyleClass().add("background");
+
+        this.zoom.setCenter(this.scroll);
+
+        this.scroll.prefWidthProperty().bind(this.root.widthProperty());
+        this.scroll.prefHeightProperty().bind(this.root.heightProperty());
+
+//        this.zoom.setBottom(createRegion(160.0,160.0));
+//        this.zoom.setLeft(createRegion(100.0,100.0));
+//        this.zoom.setRight(createRegion(100.0,100.0));
+//        this.zoom.setTop(createRegion(80.0,80.0));
+    }
+
+    private Region createRegion(double width, double height) {
+        Region spring = new Region();
+        spring.setMinSize(width, height);
+        spring.setMaxSize(width, height);
+        return spring;
     }
 
     /**
