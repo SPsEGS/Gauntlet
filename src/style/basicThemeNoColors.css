@@ -19,7 +19,7 @@
 }
 
 
-/* BEGIN: Button style */
+/* Buttons style */
 
 .button, .menu-button {
     -fx-background-radius: 7px;
@@ -42,10 +42,8 @@
     -fx-background-color: #4b4b4b;
 }
 
-/* END: Button style */
 
-
-/* BEGIN: Menu style */
+/* Menus style */
 
 .menu-button > .label {
     -fx-text-fill: -fx-custom-element-text-color;
@@ -65,10 +63,17 @@
     -fx-text-fill: -fx-custom-element-text-color;
 }
 
-/* END: Menu style */
+.menu-item {
+    -fx-pref-width: 13em;
+    -fx-border-width: 1px;
+}
+
+.menu-item:hover {
+    -fx-background-color: -fx-custom-button-hovered-color;
+}
 
 
-/* BEGIN: Title style */
+/* Titles style */
 
 .mainTitle {
     -fx-font-size: 100px;
@@ -78,11 +83,8 @@
     -fx-font-size: 50px;
 }
 
-/* END : Title style */
 
-
-/* BEGIN: TabPane style */
-
+/* TabPanes style */
 
 .tab-pane {
     -fx-background-color: transparent;
@@ -99,6 +101,7 @@
 }
 
 /* Selector found in : https://forums.oracle.com/ords/apexds/post/styling-tabpane-css-1983 */
+/* Removes the blue border that is displayed when a tab is selected */
 .tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
     -fx-border-width: 0;
 }
@@ -116,8 +119,17 @@
 }
 
 .tabContent > .button {
-    -fx-background-radius: 20px;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+
     -fx-border-width: 0;
+}
+
+.selected-tile-button {
+    -fx-background-color: -fx-custom-element-selected-color;
+    -fx-border-color: -fx-custom-element-selected-border-color;
+    -fx-border-width: 1px !important; /* The !important tab is necessary as the former CSS rule overrides this one */
+    -fx-border-radius: 15px;
 }
 
 .tab-pane > .tab-header-area > .tab-header-background {
@@ -139,8 +151,7 @@
     -fx-border-color: -fx-custom-element-selected-border-color;
 }
 
-/* END: TabPane style */
-
+/* The viewport of the scroll pane is white, and is getting in the way of seeing the background color */
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
