@@ -65,6 +65,9 @@ public class EditorController {
     /** The type of tile that has been selected (to be placed upon a click). Ground by default to avoid it being null. */
     private TileType selectedTileType = TileType.GROUND;
 
+    /** The button representing the currently selected tile. */
+    private Button selectedTileButton;
+
     /** The map that is currently being edited. */
     private GameMap map;
 
@@ -144,9 +147,22 @@ public class EditorController {
                 TileView tileView = new TileView(tile);
 
                 Button button = new Button(TilesHelper.getTileName(tile), tileView);
-                button.addEventHandler(ActionEvent.ACTION, event -> selectedTileType = tile);
+                button.addEventHandler(ActionEvent.ACTION, event -> {
+                    // Remove the styleClass to highlight the selected tile's button.
+                    this.selectedTileButton.getStyleClass().remove("selected-tile-button");
+
+                    selectedTileType = tile;
+
+                    // Add the styleClass to highlight the selected tile's button.
+                    this.selectedTileButton = button;
+                    button.getStyleClass().add("selected-tile-button");
+                });
 
                 hBox.getChildren().add(button);
+
+                // Initialize the value of selectedTileButton
+                if(tile == TileType.GROUND)
+                    selectedTileButton = button;
             }
 
             t.setContent(hBox);
