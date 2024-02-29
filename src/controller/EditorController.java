@@ -1,18 +1,16 @@
 package controller;
 
 import components.ZoomableScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 import model.editor.*;
 import view.TileConnexions;
 import view.TileView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import view.TilesHelper;
@@ -165,7 +163,14 @@ public class EditorController {
             for(TileType tile : tileGroups.get(group)) {
                 TileView tileView = new TileView(tile);
 
-                Button button = new Button(TilesHelper.getTileName(tile), tileView);
+                Button button = new Button();
+                button.setGraphic(tileView);
+
+                Tooltip buttonToolTip = new Tooltip(TilesHelper.getTileName(tile));
+                buttonToolTip.setShowDelay(new Duration(0));
+
+                button.setTooltip(buttonToolTip);
+
                 button.addEventHandler(ActionEvent.ACTION, event -> {
                     // Remove the styleClass to highlight the selected tile's button.
                     this.selectedTileButton.getStyleClass().remove("selected-tile-button");

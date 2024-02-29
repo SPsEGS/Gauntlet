@@ -122,6 +122,7 @@
     -fx-background-radius: 15px;
     -fx-border-radius: 15px;
 
+    -fx-padding: 1.5em;
     -fx-border-width: 0;
 }
 
