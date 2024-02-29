@@ -39,7 +39,7 @@ public class TextureView extends ImageView {
      * @param frame The number of the frame to display.
      */
     public void setFrame(int frame) {
-        this.setViewport(new Rectangle2D(frame * FRAME_WIDTH, frame * FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT));
+        this.setViewport(new Rectangle2D(frame * FRAME_WIDTH, 0, FRAME_WIDTH, FRAME_HEIGHT));
     }
 
     /**

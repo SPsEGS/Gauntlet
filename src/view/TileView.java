@@ -29,7 +29,7 @@ public class TileView extends StackPane {
      * @param tile The type of tile to put in the foreground
      */
     private void createForeground(TileType tile) {
-        this.foreground = new TextureView(tile, 0);
+        this.foreground = new TextureView(tile, getDefaultFrame(tile));
     }
 
     /**
@@ -48,5 +48,17 @@ public class TileView extends StackPane {
         this.getChildren().remove(this.foreground);
         createForeground(tile);
         this.getChildren().add(this.foreground);
+    }
+
+    public void setFrame(int frame) {
+        this.foreground.setFrame(frame);
+    }
+
+    public int getDefaultFrame(TileType tile) {
+        return switch (tile) {
+            case GHOST_SPAWNER_2, OTHER_SPAWNER_2 -> 1;
+            case GHOST_SPAWNER_3, OTHER_SPAWNER_3 -> 2;
+            default -> 0;
+        };
     }
 }

@@ -1,11 +1,10 @@
 package controller;
 
 import components.ZoomableScrollPane;
-import javafx.event.Event;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import model.editor.*;
-import view.TextureView;
+import view.TileConnexions;
 import view.TileView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -15,7 +14,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
@@ -61,6 +59,12 @@ public class EditorController {
 
     /** The map that is currently being edited. */
     private GameMap map;
+
+    /**
+     * Holds a 2D array of every TileView that represents the map.
+     * Because there is no way to get a node from x and y coordinates from a GridPane.
+     */
+    private TileView[][] tileViews;
 
     /** The name of the selected file to save or load. */
     private String filename = null;
@@ -111,9 +115,9 @@ public class EditorController {
 
             // For each tile in the group, create a button with the correct texture
             for(TileType tile : tileGroups.get(group)) {
-                TextureView textureView = new TextureView(tile, 0);
+                TileView tileView = new TileView(tile);
 
-                Button button = new Button(TilesHelper.getTileName(tile), textureView);
+                Button button = new Button(TilesHelper.getTileName(tile), tileView);
                 button.addEventHandler(ActionEvent.ACTION, event -> selectedTileType = tile);
 
                 hBox.getChildren().add(button);
@@ -136,6 +140,8 @@ public class EditorController {
             tileView.setTile(this.selectedTileType);
             map.setTile(x, y, this.selectedTileType);
         }
+
+        updateTileConnexions(x, y);
     }
 
 
@@ -193,6 +199,8 @@ public class EditorController {
      * @param map The map to display
      */
     public void loadMap(GameMap map) {
+        this.tileViews = new TileView[map.getWidth()][map.getHeight()];
+
         for(int y = 0; y < map.getHeight(); y++) {
             for(int x = 0; x < map.getWidth(); x++) {
                 // Create final variables to be able to access them in the anonymous EventHandler
@@ -200,11 +208,74 @@ public class EditorController {
 
                 TileView tileView = createTileView(currentTile, x, y);
 
+                tileViews[x][y] = tileView;
                 grid.add(tileView, x, y);
             }
         }
 
         this.map = map;
+
+        for(int y = 0; y < map.getHeight(); y++) {
+            for (int x = 0; x < map.getWidth(); x++) {
+                updateTileConnexions(x, y);
+            }
+        }
+    }
+
+    private boolean isConnectedTile(TileType tile) {
+        return switch (tile) {
+            case WALL, DOOR -> true;
+            default -> false;
+        };
+    }
+
+    private void updateTileConnexions(int x, int y) {
+        List<int[]> coordinateList = new ArrayList<>();
+
+        coordinateList.add(new int[] {x, y});
+
+        if(x < this.map.getWidth() - 1)
+            coordinateList.add(new int[] {x + 1, y});
+
+        if(x > 0)
+            coordinateList.add(new int[] {x - 1, y});
+
+        if(y < this.map.getHeight() - 1)
+            coordinateList.add(new int[] {x, y + 1});
+
+        if(y > 0)
+            coordinateList.add(new int[] {x, y - 1});
+
+        for(int[] coord : coordinateList) {
+            updateTileFrame(coord[0], coord[1]);
+        }
+    }
+
+    private void updateTileFrame(int x, int y) {
+        TileType tile = map.getTile(x, y);
+
+        if (isConnectedTile(this.map.getTile(x, y))) {
+
+            TileConnexions connexions = new TileConnexions();
+
+            if (x > 0 && this.map.getTile(x - 1, y) == tile) {
+                connexions.setLeft(true);
+            }
+
+            if (x < this.map.getWidth() - 1 && this.map.getTile(x + 1, y) == tile) {
+                connexions.setRight(true);
+            }
+
+            if (y < this.map.getHeight() - 1 && this.map.getTile(x, y + 1) == tile) {
+                connexions.setBottom(true);
+            }
+
+            if (y > 0 && this.map.getTile(x, y - 1) == tile) {
+                connexions.setTop(true);
+            }
+
+            tileViews[x][y].setFrame(connexions.getIndex());
+        }
     }
 
     /**
