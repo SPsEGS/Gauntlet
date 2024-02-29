@@ -69,13 +69,13 @@
             </HBox>
         </AnchorPane>
 
-        <AnchorPane visible="false" styleClass="overlay">
+        <AnchorPane fx:id="popUp" visible="false" styleClass="overlay">
             <VBox AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.leftAnchor="0.0"
                   spacing="32.0" alignment="center">
                 <Label wrapText="true" alignment="center" styleClass="title">Are you sure you want to create a new map? All your unsaved progress will be lost!</Label>
                 <HBox spacing="32.0" alignment="center">
-                    <Button>Create a new map</Button>
-                    <Button>Cancel</Button>
+                    <Button onAction="#createNew">Create a new map</Button>
+                    <Button onAction="#onCancel">Cancel</Button>
                 </HBox>
             </VBox>
         </AnchorPane>

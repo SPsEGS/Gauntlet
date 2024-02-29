@@ -71,6 +71,9 @@ public class EditorController {
     /** The map that is currently being edited. */
     private GameMap map;
 
+    @FXML
+    private AnchorPane popUp;
+
     /**
      * Holds a 2D array of every TileView that represents the map.
      * Because there is no way to get a node from x and y coordinates from a GridPane.
@@ -404,8 +407,17 @@ public class EditorController {
     // FIXME: Add a way to choose the size of the map.
     public void onNew() {
         // FIXME: Add a modal dialog to ask for user confirmation
+        this.popUp.setVisible(true);
+    }
+
+    public void createNew() {
         this.filename = null;
         this.loadMap(new GameMap(20, 20));
+        this.popUp.setVisible(false);
+    }
+
+    public void onCancel() {
+        this.popUp.setVisible(false);
     }
 
     /**
