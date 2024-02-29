@@ -7,16 +7,14 @@ import view.TileView;
 import view.TilesHelper;
 
 import javafx.scene.control.*;
-import javafx.util.Duration;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
+import javafx.fxml.FXML;
 
 import java.io.File;
 import java.util.ArrayList;
