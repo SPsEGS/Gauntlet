@@ -1,11 +1,15 @@
 package controller;
 
-import components.ZoomableScrollPane;
-import javafx.scene.input.MouseButton;
-import javafx.scene.layout.*;
 import model.editor.*;
+import components.ZoomableScrollPane;
 import view.TileConnexions;
 import view.TileView;
+import view.TilesHelper;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +19,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import view.TilesHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -146,8 +149,6 @@ public class EditorController {
 
         this.scroll.prefWidthProperty().bind(this.root.widthProperty());
         this.scroll.prefHeightProperty().bind(this.root.heightProperty());
-
-
     }
 
     private Region createRegion(double width, double height) {
